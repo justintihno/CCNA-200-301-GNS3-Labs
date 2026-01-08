@@ -1,0 +1,30 @@
+# GNS3 Specific Ignores
+# Appliance caches and large images
+appliances/
+images/
+*.bin
+*.i386
+*.amd64
+
+# Project caches and temp files
+.caches/
+gns3/
+project-files/
+snapshots/
+symbols/
+
+# Logs and runtime files
+*.log
+dynamips/*.log
+qemu/*.log
+
+# Personal/IDE files
+.DS_Store
+Thumbs.db
+*.sublime-*
+*.vscode/
+
+# Large Exported Files
+*.zip
+*.tar.gz
+*.pcap
