@@ -1,0 +1,98 @@
+R1#
+R1#sh run
+Building configuration...
+
+Current configuration : 1062 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1                                              #Change name
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.1.254                 #exclude gateway from DHCP pool               
+ip dhcp excluded-address 192.168.2.254                 #exclude gateway from DHCP pool
+ip dhcp excluded-address 192.168.1.1 192.168.1.20      #exclude for static routing
+ip dhcp excluded-address 192.168.2.1 192.168.2.20      #exclude for static routing
+!
+ip dhcp pool VLAN10-SALES                              #identify vlan
+   network 192.168.1.0 255.255.255.0                   #subnet
+   default-router 192.168.1.254                        #gateway ip
+   dns-server 8.8.8.8 8.8.4.4                          #dns
+!
+ip dhcp pool VLAN20-ENGINEERING                        #identify vlan
+   network 192.168.2.0 255.255.255.0                   #subnet
+   default-router 192.168.2.254                        #gateway ip
+   dns-server 8.8.8.8 8.8.4.4                          #dns
+!
+!
+no ip domain lookup
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip tcp synwait-time 5
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.10                    #subinterface on f0/1
+ encapsulation dot1Q 10                         #tag VLAN
+ ip address 192.168.1.254 255.255.255.0         #gateway for vlan 10      
+!
+interface FastEthernet0/1.20                    #subinterface on f0/1
+ encapsulation dot1Q 20                         #tag VLAN
+ ip address 192.168.2.254 255.255.255.0         #gateway for vlan 20
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+!
+control-plane
