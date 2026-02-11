@@ -1,7 +1,6 @@
 # GNS3 Specific Ignores
 # Appliance caches and large images
 appliances/
-images/
 *.bin
 *.i386
 *.amd64
@@ -9,7 +8,6 @@ images/
 # Project caches and temp files
 .caches/
 gns3/
-project-files/
 snapshots/
 symbols/
 
@@ -27,4 +25,3 @@ Thumbs.db
 # Large Exported Files
 *.zip
 *.tar.gz
-*.pcap
